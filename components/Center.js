@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/outline';
 import { useSession } from 'next-auth/react';
 import { shuffle } from 'lodash';
-import { useRecoilValue } from 'recoil';
-import { playlistIdState } from '../atoms/playlistAtom';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { playlistIdState, playlistState } from '../atoms/playlistAtom';
+import useSpotify from '../hooks/useSpotify';
+import Songs from './Songs';
 
 const colors = [
   'from-indigo-500',
@@ -17,12 +19,27 @@ const colors = [
 
 function Center() {
   const { data: session } = useSession();
+  const spotifyApi = useSpotify();
   const [color, setColor] = useState(null);
   const playlistId = useRecoilValue(playlistIdState);
+  const [playlist, setPlaylist] = useRecoilState(playlistState);
 
   useEffect(() => {
     setColor(shuffle(colors).pop());
   }, [playlistId]);
+
+  useEffect(() => {
+    spotifyApi
+      .getPlaylist(playlistId)
+      .then((data) => {
+        setPlaylist(data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [spotifyApi, playlistId]);
+
+  console.log(playlist);
 
   return (
     <div className="flex-grow">
@@ -39,11 +56,27 @@ function Center() {
       </header>
 
       <section
-        className={`padding-8 flex h-80 items-end space-x-7 bg-gradient-to-b ${color} to-black text-white`}
+        className={`flex h-80 items-end space-x-7 bg-gradient-to-b p-8 ${color} to-black text-white`}
       >
-        {/*<img src="" alt=""/> */}
-        <h1>Hello</h1>
+        <img
+          className="h-44 w-44 object-cover shadow-2xl"
+          src={playlist?.images?.[0]?.url}
+          alt=""
+        />
+        <div>
+          <p>
+            {playlist?.collaborative === true
+              ? 'PLAYLIST COLABORATIVA'
+              : 'PLAYLIST'}
+          </p>
+          <h1 className="text-2xl font-bold md:text-3xl xl:text-5xl">
+            {playlist?.name}
+          </h1>
+        </div>
       </section>
+      <div>
+        <Songs />
+      </div>
     </div>
   );
 }
