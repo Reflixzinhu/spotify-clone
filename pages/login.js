@@ -12,7 +12,7 @@ function Login({ providers }) {
             className="rounded-full bg-[#18D860] p-5 font-semibold text-black" //#ED0256
             onClick={() => signIn(provider.id, { callbackUrl: '/' })}
           >
-            Login with {provider.name}
+            Login com {provider.name}
           </button>
         </div>
       ))}
