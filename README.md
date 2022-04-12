@@ -7,8 +7,12 @@
   <p>Um clone do Spotify com sistema de Login e autenticação feito usando Next, NextAuth e Spotify API.</p>
   <p>O site tem funcionalidades de Login e Logout, com o Spotify Api ele faz requisições das informações de playlists e músicas da sua conta, consegue mudar a música, as playlists, volume e play/pause. Não consegui colocar funcionalidade de passar ou voltar música por conta de erro na API.</p>
   
-  <image src="https://user-images.githubusercontent.com/91212364/161064139-e2ad4c93-99d5-4d22-b6d8-e35509565331.gif" style="width:500px;"/>
   
+  
+
+https://user-images.githubusercontent.com/91212364/162982706-f18351db-99b9-4dac-a034-b0938537d9db.mp4
+
+
   <hr/>
    <div>
      <h2>Tecnologias</h2>
